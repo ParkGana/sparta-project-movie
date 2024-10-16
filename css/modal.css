@@ -13,16 +13,16 @@
 .modal-container {
     width: 80vw;
     max-width: 500px;
-    height: 90vh;
+    max-height: 90vh;
     position: relative;
     border-radius: 20px;
     background-color: #ffffff;
     padding: 30px;
-    overflow: hidden;
+    overflow: scroll;
 }
 
 .modal-contents {
-    height: 100%;
+    max-height: calc(90vh - 60px);
     display: flex;
     flex-direction: column;
     gap: 10px;
