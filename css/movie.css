@@ -1,0 +1,40 @@
+section {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 30px;
+    padding: 30px;
+}
+
+.movie-poster {
+    width: 250px;
+    height: 375px;
+    position: relative;
+    border-radius: 10px;
+    background-image: url('https://image.tmdb.org/t/p/original/poELZsrROLJW28gc1V9nB1kJigq.jpg');
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+}
+
+.movie-poster:hover .movie-title {
+    display: flex;
+}
+
+.movie-title {
+    width: 250px;
+    height: 375px;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #ffffff;
+    font-size: 20px;
+    font-weight: 700;
+    padding: 10px;
+}

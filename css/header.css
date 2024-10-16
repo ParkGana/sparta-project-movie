@@ -1,0 +1,32 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333333;
+    padding: 30px;
+}
+
+header > h1 {
+    color: #ffffff;
+    cursor: pointer;
+}
+
+header > input {
+    width: calc(100% - 250px);
+    border-radius: 10px;
+    font-size: 16px;
+    padding: 10px;
+}
+
+header > input:focus {
+    outline: none;
+}
+
+header > a {
+    border: 3px solid #ffffff;
+    border-radius: 10px;
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+    padding: 10px;
+}

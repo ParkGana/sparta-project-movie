@@ -4,9 +4,82 @@
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>영화 사이트</title>
+        <link rel="stylesheet" href="./css/common.css" />
+        <link rel="stylesheet" href="./css/header.css" />
+        <link rel="stylesheet" href="./css/movie.css" />
+        <link rel="stylesheet" href="./css/modal.css" />
+        <link rel="stylesheet" href="./css/footer.css" />
+        <style></style>
     </head>
     <body>
-        <script src="./config/api.js"></script>
-        <script src="./js/movie.js"></script>
+        <!-- Header -->
+        <header>
+            <h1>MOVIE</h1>
+            <input type="text" placeholder="영화를 검색해 주세요." />
+            <a href="">북마크</a>
+        </header>
+
+        <!-- Movie List -->
+        <section>
+            <div class="movie-poster">
+                <div class="movie-title">더 플랫폼 2</div>
+            </div>
+            <div class="movie-poster">
+                <div class="movie-title">더 플랫폼 2</div>
+            </div>
+            <div class="movie-poster">
+                <div class="movie-title">더 플랫폼 2</div>
+            </div>
+            <div class="movie-poster">
+                <div class="movie-title">더 플랫폼 2</div>
+            </div>
+            <div class="movie-poster">
+                <div class="movie-title">더 플랫폼 2</div>
+            </div>
+            <div class="movie-poster">
+                <div class="movie-title">더 플랫폼 2</div>
+            </div>
+            <div class="movie-poster">
+                <div class="movie-title">더 플랫폼 2</div>
+            </div>
+            <div class="movie-poster">
+                <div class="movie-title">더 플랫폼 2</div>
+            </div>
+            <div class="movie-poster">
+                <div class="movie-title">더 플랫폼 2</div>
+            </div>
+            <div class="movie-poster">
+                <div class="movie-title">더 플랫폼 2</div>
+            </div>
+        </section>
+
+        <!-- Movie Detail (Modal) -->
+        <div class="modal">
+            <div class="modal-container">
+                <div class="modal-contents">
+                    <span class="modal-close">
+                        <img src="./resource/icons/cancel.png" />
+                    </span>
+                    <div class="modal-poster">
+                        <img src="https://image.tmdb.org/t/p/original/poELZsrROLJW28gc1V9nB1kJigq.jpg" alt="poster" />
+                    </div>
+                    <p class="modal-title">더 플랫폼 2 <span class="modal-release">2024-09-27</span></p>
+                    <p class="modal-overview">수직 구조로 된 감방. 정체 모를 리더가 잔혹한 시스템에 자체적인 규범을 도입시키고, 이후 새로운 인물이 나타나 수상한 배급 방식에 대해 반기를 든다.</p>
+                    <p class="modal-average">⭐ 5.688</p>
+                    <button type="button">북마크 추가</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <a href="https://github.com/ParkGana/sparta-project-movie" target="_blank">
+                <img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="github" />
+            </a>
+            <h5>© 2024 ParkGana.</h5>
+        </footer>
+
+        <script type="text/javascript" src="./config/api.js"></script>
+        <script type="text/javascript" src="./js/modal.js"></script>
     </body>
 </html>

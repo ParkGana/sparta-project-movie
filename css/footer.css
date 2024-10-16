@@ -1,0 +1,15 @@
+footer {
+    align-items: center;
+    background-color: #dddddd;
+    text-align: center;
+    padding: 20px;
+}
+
+footer > a > img {
+    width: 30px;
+}
+
+footer > h5 {
+    color: #000000;
+    margin-top: 10px;
+}
