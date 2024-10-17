@@ -58,14 +58,14 @@
     font-weight: 700;
 }
 
-.modal-release {
-    color: #aaaaaa;
-    font-size: 14px;
-}
-
 .modal-overview {
     color: #000000;
     font-size: 16px;
+}
+
+.modal-release {
+    color: #aaaaaa;
+    font-size: 14px;
 }
 
 .modal-average {
