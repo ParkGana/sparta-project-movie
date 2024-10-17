@@ -1,52 +1,42 @@
-/* DOM 요소 */
-const $modal = document.querySelector('.modal');
-const $modalClose = document.querySelector('.modal-close');
-const $modalPoster = document.querySelector('.modal-poster > img');
-const $modalTitle = document.querySelector('.modal-title');
-const $modalOverview = document.querySelector('.modal-overview');
-const $modalRelease = document.querySelector('.modal-release');
-const $modalAverage = document.querySelector('.modal-average');
-const $modalBookmark = document.querySelector('.modal-bookmark');
+/* modal 창 닫기 버튼 클릭 이벤트 */
+$modalCloseBtn.addEventListener('click', closeModal);
+
+/* 북마크 추가(제거) 버튼 클릭 이벤트 */
+$modalBookmarkBtn.addEventListener('click', function () {
+    bookmarkList = JSON.parse(window.localStorage.getItem('bookmarks'));
+
+    if (bookmarkList.includes(this.id)) deleteBookmark(this);
+    else addBookmark(this);
+});
 
 /********************************************************************************/
 
-/* 영화 상세 정보 Modal 창 닫기 */
-$modalClose.addEventListener('click', function () {
+/* modal 창 닫기 */
+function closeModal() {
     $modal.style.display = 'none';
-});
-
-/* 영화 상세 정보 Modal 창에 데이터 넣기 */
-async function printData(data) {
-    const bookmarkList = JSON.parse(window.localStorage.getItem('bookmarks'));
-
-    $modalPoster.src = `https://image.tmdb.org/t/p/original${data.poster_path}`;
-    $modalTitle.innerText = data.title;
-    $modalOverview.innerText = data.overview;
-    $modalRelease.innerText = data.release_date;
-    $modalAverage.innerText = `⭐ ${data.vote_average}`;
-    $modalBookmark.id = data.id;
-    $modalBookmark.innerText = `북마크 ${bookmarkList.includes(data.id.toString()) ? '제거' : '추가'}`;
 }
 
-/* 북마크 추가 및 제거하기 */
-$modalBookmark.addEventListener('click', function () {
-    const bookmarkList = JSON.parse(window.localStorage.getItem('bookmarks'));
+/* 북마크 추가하기 */
+function addBookmark(target) {
+    bookmarkList = JSON.parse(window.localStorage.getItem('bookmarks'));
 
-    // 북마크에 등록되어 있는 경우
-    if (bookmarkList.includes(this.id)) {
-        window.localStorage.setItem('bookmarks', JSON.stringify(bookmarkList.filter((bookmark) => bookmark !== this.id)));
-        this.innerText = '북마크 추가';
-        window.alert('북마크가 제거되었습니다.');
-    }
-    // 북마크에 등록되어있지 않은 경우
-    else {
-        bookmarkList.push(this.id);
-        window.localStorage.setItem('bookmarks', JSON.stringify(bookmarkList));
-        this.innerText = '북마크 제거';
-        window.alert('북마크에 추가되었습니다.');
-    }
+    bookmarkList.push(target.id);
+    window.localStorage.setItem('bookmarks', JSON.stringify(bookmarkList));
+    target.innerText = '북마크 제거';
+    window.alert('북마크에 추가되었습니다.');
 
-    $modal.style.display = 'none';
+    closeModal();
+}
 
-    window.localStorage.getItem('page-state') === 'total' ? changeToTotal() : changeToBookmark();
-});
+/* 북마크 제거하기 */
+function deleteBookmark(target) {
+    bookmarkList = JSON.parse(window.localStorage.getItem('bookmarks'));
+
+    window.localStorage.setItem('bookmarks', JSON.stringify(bookmarkList.filter((bookmark) => bookmark !== target.id)));
+    target.innerText = '북마크 추가';
+    window.alert('북마크가 제거되었습니다.');
+
+    window.localStorage.getItem('page-state') === 'bookmark' && changeToBookmark();
+
+    closeModal();
+}
