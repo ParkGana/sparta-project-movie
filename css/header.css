@@ -22,11 +22,13 @@ header > input:focus {
     outline: none;
 }
 
-header > a {
+header > button {
     border: 3px solid #ffffff;
     border-radius: 10px;
+    background-color: transparent;
     color: #ffffff;
     font-size: 16px;
     text-decoration: none;
     padding: 10px;
+    cursor: pointer;
 }
