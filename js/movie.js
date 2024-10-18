@@ -28,19 +28,21 @@ function setLocalStorage() {
 
 /* TMDB API로 영화 데이터 가져오기 */
 async function getMovieList(url, state) {
-    fetch(url, options)
-        .then((response) => response.json())
-        .then((response) => {
-            appendMovieList(state, response.results);
-        })
-        .then(() => {
-            $movieList = document.querySelectorAll('.movie-poster');
-        })
-        .catch((err) => console.error(err));
+    try {
+        const response = await fetch(url, options);
+        const data = await response.json();
+
+        await appendMovieList(state, data.results);
+
+        $movieList = document.querySelectorAll('.movie-poster');
+    } catch (err) {
+        console.error(err);
+        window.alert('오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
+    }
 }
 
 /* TMDB API로 가져온 영화 데이터 화면에 그려주기 */
-function appendMovieList(state, data) {
+async function appendMovieList(state, data) {
     if (state === 'refresh') $movieSection.innerHTML = '';
 
     movieDataList = data;
