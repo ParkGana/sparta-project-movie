@@ -1,7 +1,18 @@
 /* TMDB API를 사용해서 데이터 받아오기 */
 document.addEventListener('DOMContentLoaded', async function () {
     setLocalStorage();
-    getMovieList(makeUrl(keyword));
+    getMovieList(makeUrl(1, keyword), 'refresh');
+});
+
+window.addEventListener('wheel', async function () {
+    if (window.localStorage.getItem('page-state') === 'total') {
+        const browserBottom = window.innerHeight;
+        const footerBottom = $footer.getBoundingClientRect().bottom;
+
+        if (Math.abs(browserBottom - footerBottom) < 10) {
+            await getMovieList(makeUrl(++page, keyword), 'add');
+        }
+    }
 });
 
 /********************************************************************************/
@@ -16,11 +27,11 @@ function setLocalStorage() {
 }
 
 /* TMDB API로 영화 데이터 가져오기 */
-function getMovieList(url) {
+async function getMovieList(url, state) {
     fetch(url, options)
         .then((response) => response.json())
         .then((response) => {
-            appendMovieList('refresh', response.results);
+            appendMovieList(state, response.results);
         })
         .then(() => {
             $movieList = document.querySelectorAll('.movie-poster');

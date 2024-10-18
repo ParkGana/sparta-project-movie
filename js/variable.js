@@ -11,6 +11,7 @@ const $modalRelease = document.querySelector('.modal-release');
 const $modalAverage = document.querySelector('.modal-average');
 const $modalCloseBtn = document.querySelector('.modal-close');
 const $modalBookmarkBtn = document.querySelector('.modal-bookmark');
+const $footer = document.getElementById('footer');
 
 let $movieList;
 

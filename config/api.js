@@ -12,10 +12,10 @@ const apiSearchBaseUrl = 'https://api.themoviedb.org/3/search/movie';
 /********************************************************************************/
 
 /* TMDB API URL 만들기 */
-function makeUrl(keyword) {
+function makeUrl(page, keyword) {
     const baseUrl = keyword ? apiSearchBaseUrl : apiDefaultBaseUrl;
     const query = keyword ? `query=${encodeURIComponent(keyword)}` : '';
-    const option = 'include_adult=false&include_video=false&language=ko-KR&page=1&sort_by=popularity.desc';
+    const option = `include_adult=false&include_video=false&language=ko-KR&page=${page}&sort_by=popularity.desc`;
 
     return `${baseUrl}?${query}&${option}`;
 }
