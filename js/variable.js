@@ -1,5 +1,6 @@
 /* DOM 요소 */
 const $logo = document.querySelector('.logo');
+const $search = document.getElementById('search');
 const $bookmarkBtn = document.querySelector('.bookmark');
 const $movieSection = document.getElementById('movie-section');
 const $modal = document.querySelector('.modal');
