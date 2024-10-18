@@ -1,9 +1,12 @@
 header {
+    position: sticky;
+    top: 0;
     display: flex;
     justify-content: space-between;
     align-items: center;
     background-color: #333333;
     padding: 30px;
+    z-index: 1;
 }
 
 header > h1 {
