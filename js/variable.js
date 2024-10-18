@@ -22,3 +22,9 @@ let bookmarkList;
 
 /* TMDB API 데이터 */
 let movieDataList;
+
+/********************************************************************************/
+
+/* 영화 데이터 */
+let page = 1;
+let keyword = '';

@@ -1,38 +1,7 @@
 /* TMDB API를 사용해서 데이터 받아오기 */
 document.addEventListener('DOMContentLoaded', async function () {
     setLocalStorage();
-
-    fetch('https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=ko-KR&page=1&sort_by=popularity.desc', options)
-        .then((response) => response.json())
-        .then((response) => {
-            movieDataList = response.results;
-
-            $movieSection.innerHTML = '';
-
-            // 받아온 데이터를 동적으로 화면에 그려주기
-            response.results.map((movie) => {
-                const poster = document.createElement('div');
-                poster.id = movie.id;
-                poster.className = 'movie-poster';
-                poster.style.backgroundImage = `url('https://image.tmdb.org/t/p/original${movie.poster_path}')`;
-
-                // 영화 상세 정보 Modal 창 열기 이벤트
-                poster.addEventListener('click', function () {
-                    openModal(movie);
-                });
-
-                const title = document.createElement('div');
-                title.className = 'movie-title';
-                title.innerText = movie.title;
-
-                poster.appendChild(title);
-                $movieSection.appendChild(poster);
-            });
-        })
-        .then(() => {
-            $movieList = document.querySelectorAll('.movie-poster');
-        })
-        .catch((err) => console.error(err));
+    getMovieList(makeUrl(keyword));
 });
 
 /********************************************************************************/
@@ -44,6 +13,46 @@ function setLocalStorage() {
     if (!window.localStorage.getItem('bookmarks')) {
         window.localStorage.setItem('bookmarks', JSON.stringify([]));
     }
+}
+
+/* TMDB API로 영화 데이터 가져오기 */
+function getMovieList(url) {
+    fetch(url, options)
+        .then((response) => response.json())
+        .then((response) => {
+            appendMovieList('refresh', response.results);
+        })
+        .then(() => {
+            $movieList = document.querySelectorAll('.movie-poster');
+        })
+        .catch((err) => console.error(err));
+}
+
+/* TMDB API로 가져온 영화 데이터 화면에 그려주기 */
+function appendMovieList(state, data) {
+    if (state === 'refresh') $movieSection.innerHTML = '';
+
+    movieDataList = data;
+
+    // 받아온 데이터를 동적으로 화면에 그려주기
+    data.map((movie) => {
+        const poster = document.createElement('div');
+        poster.id = movie.id;
+        poster.className = 'movie-poster';
+        poster.style.backgroundImage = `url('https://image.tmdb.org/t/p/original${movie.poster_path}')`;
+
+        // 영화 상세 정보 Modal 창 열기 이벤트
+        poster.addEventListener('click', function () {
+            openModal(movie);
+        });
+
+        const title = document.createElement('div');
+        title.className = 'movie-title';
+        title.innerText = movie.title;
+
+        poster.appendChild(title);
+        $movieSection.appendChild(poster);
+    });
 }
 
 /* modal 창 열기 */
