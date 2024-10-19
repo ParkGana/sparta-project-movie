@@ -1,17 +1,25 @@
 /* TMDB API를 사용해서 데이터 받아오기 */
 document.addEventListener('DOMContentLoaded', async function () {
     setLocalStorage();
-    getMovieList(makeUrl(1));
+    await getMovieData(makeListUrl(1), 'list');
 });
 
+/* 화면 스크롤 이벤트 */
 window.addEventListener('wheel', async function () {
     if (window.localStorage.getItem('page-state') === 'total') {
         const browserBottom = window.innerHeight;
         const footerBottom = $footer.getBoundingClientRect().bottom;
 
         if (Math.abs(browserBottom - footerBottom) < 10) {
-            await getMovieList(makeUrl(++page));
+            await getMovieData(makeListUrl(++page), 'list');
         }
+    }
+});
+
+/* 영화 포스터 클릭 이벤트 */
+$movieSection.addEventListener('click', function (e) {
+    if (e.target.className === 'movie-title') {
+        openModal(e.target.id);
     }
 });
 
@@ -27,12 +35,13 @@ function setLocalStorage() {
 }
 
 /* TMDB API로 영화 데이터 가져오기 */
-async function getMovieList(url) {
+async function getMovieData(url, state) {
     try {
         const response = await fetch(url, options);
         const data = await response.json();
 
-        await appendMovieList(data.results);
+        state === 'list' && appendMovieList(data.results);
+        state === 'detail' && printModalData(data);
 
         $movieList = document.querySelectorAll('.movie-poster');
     } catch (err) {
@@ -42,7 +51,7 @@ async function getMovieList(url) {
 }
 
 /* TMDB API로 가져온 영화 데이터 화면에 그려주기 */
-async function appendMovieList(data) {
+function appendMovieList(data) {
     movieDataList = data;
 
     // 받아온 데이터를 동적으로 화면에 그려주기
@@ -52,12 +61,8 @@ async function appendMovieList(data) {
         poster.className = 'movie-poster';
         poster.style.backgroundImage = `url('https://image.tmdb.org/t/p/original${movie.poster_path}')`;
 
-        // 영화 상세 정보 Modal 창 열기 이벤트
-        poster.addEventListener('click', function () {
-            openModal(movie);
-        });
-
         const title = document.createElement('div');
+        title.id = movie.id;
         title.className = 'movie-title';
         title.innerText = movie.title;
 
@@ -67,13 +72,13 @@ async function appendMovieList(data) {
 }
 
 /* modal 창 열기 */
-async function openModal(data) {
-    await printModalData(data);
+async function openModal(id) {
+    await getMovieData(makeDetailUrl(id), 'detail');
     $modal.style.display = 'flex';
 }
 
 /* modal 창에 데이터 놓기 */
-async function printModalData(data) {
+function printModalData(data) {
     bookmarkList = JSON.parse(window.localStorage.getItem('bookmarks'));
 
     $modalPoster.src = `https://image.tmdb.org/t/p/original${data.poster_path}`;

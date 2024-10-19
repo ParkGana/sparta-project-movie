@@ -9,9 +9,17 @@ const options = {
 /********************************************************************************/
 
 /* TMDB API 목록 URL 만들기 */
-function makeUrl(page) {
+function makeListUrl(page) {
     const baseUrl = 'https://api.themoviedb.org/3/discover/movie';
     const option = `include_adult=false&include_video=false&language=ko-KR&page=${page}&sort_by=popularity.desc`;
+
+    return `${baseUrl}?${option}`;
+}
+
+/* TMDB API 정보 URL 만들기 */
+function makeDetailUrl(id) {
+    const baseUrl = `https://api.themoviedb.org/3/movie/${id}`;
+    const option = 'language=ko-KR';
 
     return `${baseUrl}?${option}`;
 }
