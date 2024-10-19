@@ -6,16 +6,12 @@ const options = {
     }
 };
 
-const apiDefaultBaseUrl = 'https://api.themoviedb.org/3/discover/movie';
-const apiSearchBaseUrl = 'https://api.themoviedb.org/3/search/movie';
-
 /********************************************************************************/
 
-/* TMDB API URL 만들기 */
-function makeUrl(page, keyword) {
-    const baseUrl = keyword ? apiSearchBaseUrl : apiDefaultBaseUrl;
-    const query = keyword ? `query=${encodeURIComponent(keyword)}` : '';
+/* TMDB API 목록 URL 만들기 */
+function makeUrl(page) {
+    const baseUrl = 'https://api.themoviedb.org/3/discover/movie';
     const option = `include_adult=false&include_video=false&language=ko-KR&page=${page}&sort_by=popularity.desc`;
 
-    return `${baseUrl}?${query}&${option}`;
+    return `${baseUrl}?${option}`;
 }

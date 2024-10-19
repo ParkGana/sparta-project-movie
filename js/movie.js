@@ -1,7 +1,7 @@
 /* TMDB API를 사용해서 데이터 받아오기 */
 document.addEventListener('DOMContentLoaded', async function () {
     setLocalStorage();
-    getMovieList(makeUrl(1, keyword), 'refresh');
+    getMovieList(makeUrl(1));
 });
 
 window.addEventListener('wheel', async function () {
@@ -10,7 +10,7 @@ window.addEventListener('wheel', async function () {
         const footerBottom = $footer.getBoundingClientRect().bottom;
 
         if (Math.abs(browserBottom - footerBottom) < 10) {
-            await getMovieList(makeUrl(++page, keyword), 'add');
+            await getMovieList(makeUrl(++page));
         }
     }
 });
@@ -27,12 +27,12 @@ function setLocalStorage() {
 }
 
 /* TMDB API로 영화 데이터 가져오기 */
-async function getMovieList(url, state) {
+async function getMovieList(url) {
     try {
         const response = await fetch(url, options);
         const data = await response.json();
 
-        await appendMovieList(state, data.results);
+        await appendMovieList(data.results);
 
         $movieList = document.querySelectorAll('.movie-poster');
     } catch (err) {
@@ -42,9 +42,7 @@ async function getMovieList(url, state) {
 }
 
 /* TMDB API로 가져온 영화 데이터 화면에 그려주기 */
-async function appendMovieList(state, data) {
-    if (state === 'refresh') $movieSection.innerHTML = '';
-
+async function appendMovieList(data) {
     movieDataList = data;
 
     // 받아온 데이터를 동적으로 화면에 그려주기
