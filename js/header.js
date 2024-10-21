@@ -22,6 +22,8 @@ function changeToTotal() {
     $movieList.forEach((movie) => {
         movie.style.display = 'flex';
     });
+
+    $search.style.display = 'block';
 }
 
 /* 페이지를 북마크 모드로 변환하기 */
@@ -33,6 +35,8 @@ function changeToBookmark() {
     $movieList.forEach((movie) => {
         movie.style.display = bookmarkList.includes(movie.id) ? 'flex' : 'none';
     });
+
+    $search.style.display = 'none';
 }
 
 /* 영화 검색하기 */
