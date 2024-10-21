@@ -7,7 +7,6 @@
     box-sizing: border-box;
 }
 
-/* 스크롤 없애기 */
 body {
     -ms-overflow-style: none;
 }
