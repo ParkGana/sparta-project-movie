@@ -1,3 +1,5 @@
+import { makeListUrl, makeSearchUrl } from '../config/api.js';
+import { getMovieData } from './movie.js';
 import { $logo, $search, $bookmarkBtn, $movieList, bookmarkList, setBookmarkList } from './variable.js';
 
 /********************************************************************************/
@@ -13,14 +15,20 @@ $logo.addEventListener('click', changeToTotal);
 $bookmarkBtn.addEventListener('click', changeToBookmark);
 
 /* 검색 키워드 입력 이벤트 */
-$search.addEventListener('input', function () {
+$search.addEventListener('input', async function () {
     // 페이지를 '전체' 모드로 설정
     window.localStorage.setItem('page-state', 'total');
 
-    // 검색어 입력 시, 모두 소문자로 바꾸고 공백 제거
-    keyword = this.value.toLowerCase().replaceAll(' ', '');
+    keyword = this.value;
 
-    filterMovieList();
+    // 검색어가 있는 경우
+    if (keyword) {
+        await getMovieData(makeSearchUrl(1, keyword), 'search', true);
+    }
+    // 검색어가 없는 경우
+    else {
+        await getMovieData(makeListUrl(1), 'list', true);
+    }
 });
 
 /********************************************************************************/
@@ -56,23 +64,6 @@ function changeToBookmark() {
     $search.style.display = 'none';
 }
 
-/* 영화 검색하기 */
-function filterMovieList() {
-    if ($movieList) {
-        $movieList.forEach((movie) => {
-            const titleDiv = movie.children[0];
-
-            if (titleDiv) {
-                // 영화 제목을 모두 소문자로 바꾸고 공백 제거
-                const title = titleDiv.innerText.toLowerCase().replaceAll(' ', '');
-
-                // 영화 제목에 검색어가 포함된 영화만 보이도록 css 설정
-                movie.style.display = keyword === '' || title.includes(keyword) ? 'flex' : 'none';
-            }
-        });
-    }
-}
-
 /********************************************************************************/
 
-export { changeToBookmark };
+export { keyword, changeToBookmark };

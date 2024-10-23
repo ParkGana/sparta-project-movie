@@ -33,8 +33,11 @@ function setBookmarkList(data) {
 }
 
 /* page 데이터 재할당 */
-function setPage() {
-    return ++page;
+function setPage(data) {
+    if (data) page = data;
+    else ++page;
+
+    return page;
 }
 
 /********************************************************************************/

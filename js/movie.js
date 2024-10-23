@@ -1,4 +1,4 @@
-import { options, makeListUrl, makeDetailUrl } from '../config/api.js';
+import { options, makeListUrl, makeDetailUrl, makeSearchUrl } from '../config/api.js';
 import {
     $movieSection,
     $modal,
@@ -14,13 +14,14 @@ import {
     setBookmarkList,
     setPage
 } from './variable.js';
+import { keyword } from './header.js';
 
 /********************************************************************************/
 
 /* TMDB API를 사용해서 데이터 받아오기 */
 document.addEventListener('DOMContentLoaded', async function () {
     setLocalStorage();
-    await getMovieData(makeListUrl(1), 'list');
+    await getMovieData(makeListUrl(1), 'list', true);
 });
 
 /* 화면 스크롤 이벤트 */
@@ -32,7 +33,14 @@ window.addEventListener('wheel', async function () {
 
         // 화면의 height 값과 footer 요소의 bottom 값의 차이가 10 미만인 경우
         if (Math.abs(browserBottom - footerBottom) < 10) {
-            await getMovieData(makeListUrl(setPage()), 'list');
+            // 검색어가 있는 경우
+            if (keyword) {
+                await getMovieData(makeSearchUrl(setPage(), keyword), 'search');
+            }
+            // 검색어가 없는 경우
+            else {
+                await getMovieData(makeListUrl(setPage()), 'list');
+            }
         }
     }
 });
@@ -58,13 +66,13 @@ function setLocalStorage() {
 }
 
 /* TMDB API로 영화 데이터 가져오기 */
-async function getMovieData(url, state) {
+async function getMovieData(url, state, isReset) {
     try {
         const response = await fetch(url, options);
         const data = await response.json();
 
-        // 영화 목록 데이터를 가져온 경우
-        state === 'list' && appendMovieList(data.results);
+        // 영화 목록 또는 검색 데이터를 가져온 경우
+        (state === 'list' || state === 'search') && appendMovieList(data.results, isReset);
         // 영화 상세 정보 데이터를 가져온 겨우
         state === 'detail' && printModalData(data);
 
@@ -76,7 +84,11 @@ async function getMovieData(url, state) {
 }
 
 /* TMDB API로 가져온 영화 데이터 화면에 그려주기 */
-function appendMovieList(data) {
+function appendMovieList(data, isReset) {
+    if (isReset) {
+        $movieSection.innerHTML = '';
+    }
+
     // 받아온 데이터를 동적으로 화면에 그려주기
     data.map((movie) => {
         const poster = document.createElement('div');
@@ -114,3 +126,7 @@ function printModalData(data) {
     $modalBookmarkBtn.id = data.id;
     $modalBookmarkBtn.innerText = `북마크 ${bookmarkList.includes(data.id.toString()) ? '제거' : '추가'}`;
 }
+
+/********************************************************************************/
+
+export { getMovieData };

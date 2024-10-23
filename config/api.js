@@ -11,7 +11,17 @@ const options = {
 /* TMDB API 영화 목록 URL 만들기 */
 function makeListUrl(page) {
     const baseUrl = 'https://api.themoviedb.org/3/discover/movie';
-    const option = `include_adult=false&include_video=false&language=ko-KR&page=${page}&sort_by=popularity.desc`;
+    const option = `language=ko-KR&page=${page}&sort_by=popularity.desc`;
+
+    return `${baseUrl}?${option}`;
+}
+
+/* TMDB API 영화 검색 목록 URL 만들기 */
+function makeSearchUrl(page, keyword) {
+    console.log(page);
+
+    const baseUrl = 'https://api.themoviedb.org/3/search/movie';
+    const option = `language=ko-KR&query=${encodeURIComponent(keyword)}&page=${page}`;
 
     return `${baseUrl}?${option}`;
 }
@@ -26,4 +36,4 @@ function makeDetailUrl(id) {
 
 /********************************************************************************/
 
-export { options, makeListUrl, makeDetailUrl };
+export { options, makeListUrl, makeSearchUrl, makeDetailUrl };
