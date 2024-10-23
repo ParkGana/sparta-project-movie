@@ -16,6 +16,8 @@ import {
 } from './variable.js';
 import { keyword } from './header.js';
 
+let throttling;
+
 /********************************************************************************/
 
 /* TMDB API를 사용해서 데이터 받아오기 */
@@ -31,16 +33,20 @@ window.addEventListener('wheel', async function () {
         const browserBottom = window.innerHeight; // 화면의 height 값
         const footerBottom = $footer.getBoundingClientRect().bottom; // footer 요소의 bottom 값
 
-        // 화면의 height 값과 footer 요소의 bottom 값의 차이가 10 미만인 경우
-        if (Math.abs(browserBottom - footerBottom) < 10) {
-            // 검색어가 있는 경우
-            if (keyword) {
-                await getMovieData(makeSearchUrl(setPage(), keyword), 'search');
-            }
-            // 검색어가 없는 경우
-            else {
-                await getMovieData(makeListUrl(setPage()), 'list');
-            }
+        // 화면의 height 값과 footer 요소의 bottom 값의 차이가 30 미만인 경우
+        if (Math.abs(browserBottom - footerBottom) < 30) {
+            clearTimeout(throttling);
+
+            throttling = setTimeout(async () => {
+                // 검색어가 있는 경우
+                if (keyword) {
+                    await getMovieData(makeSearchUrl(setPage(), keyword), 'search');
+                }
+                // 검색어가 없는 경우
+                else {
+                    await getMovieData(makeListUrl(setPage()), 'list');
+                }
+            }, 500);
         }
     }
 });

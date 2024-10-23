@@ -5,6 +5,7 @@ import { $logo, $search, $bookmarkBtn, bookmarkList, setBookmarkList, $movieSect
 /********************************************************************************/
 
 let keyword = '';
+let throttling;
 
 /********************************************************************************/
 
@@ -21,14 +22,18 @@ $search.addEventListener('input', async function () {
 
     keyword = this.value;
 
-    // 검색어가 있는 경우
-    if (keyword) {
-        await getMovieData(makeSearchUrl(1, keyword), 'search', true);
-    }
-    // 검색어가 없는 경우
-    else {
-        await getMovieData(makeListUrl(1), 'list', true);
-    }
+    clearTimeout(throttling);
+
+    throttling = setTimeout(async () => {
+        // 검색어가 있는 경우
+        if (keyword) {
+            await getMovieData(makeSearchUrl(1, keyword), 'search', true);
+        }
+        // 검색어가 없는 경우
+        else {
+            await getMovieData(makeListUrl(1), 'list', true);
+        }
+    }, 500);
 });
 
 /********************************************************************************/

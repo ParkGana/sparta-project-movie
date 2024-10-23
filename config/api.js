@@ -18,8 +18,6 @@ function makeListUrl(page) {
 
 /* TMDB API 영화 검색 목록 URL 만들기 */
 function makeSearchUrl(page, keyword) {
-    console.log(page);
-
     const baseUrl = 'https://api.themoviedb.org/3/search/movie';
     const option = `language=ko-KR&query=${encodeURIComponent(keyword)}&page=${page}`;
 
