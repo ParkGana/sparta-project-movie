@@ -1,6 +1,6 @@
-import { makeListUrl, makeSearchUrl } from '../config/api.js';
+import { makeDetailUrl, makeListUrl, makeSearchUrl } from '../config/api.js';
 import { getMovieData } from './movie.js';
-import { $logo, $search, $bookmarkBtn, $movieList, bookmarkList, setBookmarkList } from './variable.js';
+import { $logo, $search, $bookmarkBtn, bookmarkList, setBookmarkList, $movieSection } from './variable.js';
 
 /********************************************************************************/
 
@@ -34,14 +34,11 @@ $search.addEventListener('input', async function () {
 /********************************************************************************/
 
 /* 페이지를 전체 모드로 전환하기 */
-function changeToTotal() {
+async function changeToTotal() {
     // 페이지를 '전체' 모드로 설정
     window.localStorage.setItem('page-state', 'total');
 
-    // 모든 영화가 보이도록 css 설정
-    $movieList.forEach((movie) => {
-        movie.style.display = 'flex';
-    });
+    await getMovieData(makeListUrl(1), 'list', true);
 
     // 검색창이 보이도록 css 설정
     $search.style.display = 'block';
@@ -55,9 +52,10 @@ function changeToBookmark() {
     // 북마크된 영화 목록 가져오기
     setBookmarkList(JSON.parse(window.localStorage.getItem('bookmarks')));
 
-    // 북마크된 영화만 보이도록 css 설정
-    $movieList.forEach((movie) => {
-        movie.style.display = bookmarkList.includes(movie.id) ? 'flex' : 'none';
+    $movieSection.innerHTML = '';
+
+    bookmarkList.forEach(async (bookmark) => {
+        await getMovieData(makeDetailUrl(bookmark), 'bookmark');
     });
 
     // 검색창이 숨겨지도록 css 설정

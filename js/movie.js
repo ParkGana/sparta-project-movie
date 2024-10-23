@@ -73,6 +73,8 @@ async function getMovieData(url, state, isReset) {
 
         // 영화 목록 또는 검색 데이터를 가져온 경우
         (state === 'list' || state === 'search') && appendMovieList(data.results, isReset);
+        // 영화 북마크 데이터를 가져온 겨우
+        state === 'bookmark' && appendBookmarkList(data);
         // 영화 상세 정보 데이터를 가져온 겨우
         state === 'detail' && printModalData(data);
 
@@ -104,6 +106,23 @@ function appendMovieList(data, isReset) {
         poster.appendChild(title);
         $movieSection.appendChild(poster);
     });
+}
+
+/* TMDB API로 가져온 북마크 데이터 화면에 그려주기 */
+function appendBookmarkList(data) {
+    // 받아온 데이터를 동적으로 화면에 그려주기
+    const poster = document.createElement('div');
+    poster.id = data.id;
+    poster.className = 'movie-poster';
+    poster.style.backgroundImage = `url('https://image.tmdb.org/t/p/original${data.poster_path}')`;
+
+    const title = document.createElement('div');
+    title.id = data.id;
+    title.className = 'movie-title';
+    title.innerText = data.title;
+
+    poster.appendChild(title);
+    $movieSection.appendChild(poster);
 }
 
 /* modal 창 열기 */
