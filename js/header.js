@@ -43,6 +43,9 @@ async function changeToTotal() {
     // 페이지를 '전체' 모드로 설정
     window.localStorage.setItem('page-state', 'total');
 
+    // 페이지 최상단으로 이동
+    window.scrollTo({ top: 0 });
+
     await getMovieData(makeListUrl(1), 'list', true);
 
     // 검색창이 보이도록 css 설정
@@ -53,6 +56,9 @@ async function changeToTotal() {
 function changeToBookmark() {
     // 페이지를 '북마크' 모드로 설정
     window.localStorage.setItem('page-state', 'bookmark');
+
+    // 페이지 최상단으로 이동
+    window.scrollTo({ top: 0 });
 
     // 북마크된 영화 목록 가져오기
     setBookmarkList(JSON.parse(window.localStorage.getItem('bookmarks')));
