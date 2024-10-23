@@ -1,3 +1,11 @@
+import { $logo, $search, $bookmarkBtn, $movieList, bookmarkList, setBookmarkList } from './variable.js';
+
+/********************************************************************************/
+
+let keyword = '';
+
+/********************************************************************************/
+
 /* logo 클릭 이벤트 */
 $logo.addEventListener('click', changeToTotal);
 
@@ -37,7 +45,7 @@ function changeToBookmark() {
     window.localStorage.setItem('page-state', 'bookmark');
 
     // 북마크된 영화 목록 가져오기
-    bookmarkList = JSON.parse(window.localStorage.getItem('bookmarks'));
+    setBookmarkList(JSON.parse(window.localStorage.getItem('bookmarks')));
 
     // 북마크된 영화만 보이도록 css 설정
     $movieList.forEach((movie) => {
@@ -64,3 +72,7 @@ function filterMovieList() {
         });
     }
 }
+
+/********************************************************************************/
+
+export { changeToBookmark };

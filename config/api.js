@@ -23,3 +23,7 @@ function makeDetailUrl(id) {
 
     return `${baseUrl}?${option}`;
 }
+
+/********************************************************************************/
+
+export { options, makeListUrl, makeDetailUrl };

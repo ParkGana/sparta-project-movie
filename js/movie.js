@@ -1,3 +1,22 @@
+import { options, makeListUrl, makeDetailUrl } from '../config/api.js';
+import {
+    $movieSection,
+    $modal,
+    $modalPoster,
+    $modalTitle,
+    $modalOverview,
+    $modalRelease,
+    $modalAverage,
+    $modalBookmarkBtn,
+    $footer,
+    bookmarkList,
+    setMovieList,
+    setBookmarkList,
+    setPage
+} from './variable.js';
+
+/********************************************************************************/
+
 /* TMDB API를 사용해서 데이터 받아오기 */
 document.addEventListener('DOMContentLoaded', async function () {
     setLocalStorage();
@@ -13,7 +32,7 @@ window.addEventListener('wheel', async function () {
 
         // 화면의 height 값과 footer 요소의 bottom 값의 차이가 10 미만인 경우
         if (Math.abs(browserBottom - footerBottom) < 10) {
-            await getMovieData(makeListUrl(++page), 'list');
+            await getMovieData(makeListUrl(setPage()), 'list');
         }
     }
 });
@@ -49,7 +68,7 @@ async function getMovieData(url, state) {
         // 영화 상세 정보 데이터를 가져온 겨우
         state === 'detail' && printModalData(data);
 
-        $movieList = document.querySelectorAll('.movie-poster');
+        setMovieList(document.querySelectorAll('.movie-poster'));
     } catch (err) {
         console.error(err);
         window.alert('오류가 발생했습니다. 잠시 후 다시 시도해 주세요.');
@@ -84,7 +103,7 @@ async function openModal(id) {
 /* modal 창에 데이터 놓기 */
 function printModalData(data) {
     // 북마크된 영화 목록 가져오기
-    bookmarkList = JSON.parse(window.localStorage.getItem('bookmarks'));
+    setBookmarkList(JSON.parse(window.localStorage.getItem('bookmarks')));
 
     $modalPoster.src = `https://image.tmdb.org/t/p/original${data.poster_path}`;
     $modalTitle.innerText = data.title;

@@ -19,4 +19,44 @@ let bookmarkList;
 
 /* 영화 데이터 */
 let page = 1;
-let keyword = '';
+
+/********************************************************************************/
+
+/* $movieList 데이터 재할당 */
+function setMovieList(data) {
+    $movieList = data;
+}
+
+/* bookmarkList 데이터 재할당 */
+function setBookmarkList(data) {
+    bookmarkList = data;
+}
+
+/* page 데이터 재할당 */
+function setPage() {
+    return ++page;
+}
+
+/********************************************************************************/
+
+export {
+    $logo,
+    $search,
+    $bookmarkBtn,
+    $movieSection,
+    $modal,
+    $modalPoster,
+    $modalTitle,
+    $modalOverview,
+    $modalRelease,
+    $modalAverage,
+    $modalCloseBtn,
+    $modalBookmarkBtn,
+    $footer,
+    $movieList,
+    bookmarkList,
+    page,
+    setMovieList,
+    setBookmarkList,
+    setPage
+};
