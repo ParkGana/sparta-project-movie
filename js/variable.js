@@ -12,20 +12,10 @@ const $modalAverage = document.querySelector('.modal-average');
 const $modalCloseBtn = document.querySelector('.modal-close');
 const $modalBookmarkBtn = document.querySelector('.modal-bookmark');
 const $footer = document.getElementById('footer');
-
 let $movieList;
-
-/********************************************************************************/
 
 /* localStorage 데이터 */
 let bookmarkList;
-
-/********************************************************************************/
-
-/* TMDB API 데이터 */
-let movieDataList;
-
-/********************************************************************************/
 
 /* 영화 데이터 */
 let page = 1;

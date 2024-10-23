@@ -58,8 +58,6 @@ async function getMovieData(url, state) {
 
 /* TMDB API로 가져온 영화 데이터 화면에 그려주기 */
 function appendMovieList(data) {
-    movieDataList = data;
-
     // 받아온 데이터를 동적으로 화면에 그려주기
     data.map((movie) => {
         const poster = document.createElement('div');
